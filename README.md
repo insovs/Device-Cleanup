@@ -1,4 +1,4 @@
-# insopti Device Cleanup
+Device Cleanup
 Scans and removes **ghost devices** left behind by previously connected hardware — reducing IRQ overhead, lowering input latency, and making input smoother.
 Everything runs natively through Windows built-in tools. It is **safe**, **non-destructive**, and **fully reversible**.
 
