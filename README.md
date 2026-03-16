@@ -15,21 +15,21 @@ Everything runs natively through Windows built-in tools. It is **safe**, **non-d
 **Scan results — ghost devices detected and listed, protected devices preserved**
 > All detected devices are displayed with their status. Ghost devices (`GHOST`) are pre-checked and ready for removal. Devices with CPU affinity / IRQ pinning (`AFFINITY CONFIGURED`) are listed separately and unchecked by default.
 
-![Scan results](assets/screenshot_01.png)
+![Scan results](https://github.com/user-attachments/assets/83c7c105-f800-4751-9724-e89ed543301a)
 
 ---
 
 **Confirm removal — one-click removal with confirmation dialog**
 > Before any deletion, a confirmation popup displays the exact number of devices to be removed. The action cannot be undone through this tool — though devices will re-appear if the hardware is reconnected.
 
-![Confirm removal](assets/screenshot_02.png)
+![Confirm removal](https://github.com/user-attachments/assets/ca34460b-8a2a-4fc5-893e-56667025b984)
 
 ---
 
 **After removal — clean state, only protected devices remain**
 > After removal, the tool automatically re-scans. Ghost count drops to `0`, removed count updates to reflect the session total. Only `AFFINITY CONFIGURED` devices remain, fully intact.
 
-![After removal](assets/screenshot_03.png)
+![After removal](https://github.com/user-attachments/assets/71da8c18-de17-476e-bbe4-9a05476c72ae)
 
 </details>
 
