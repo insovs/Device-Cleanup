@@ -2,6 +2,8 @@
 Scans and removes **ghost devices** left behind by previously connected hardware — reducing IRQ overhead, lowering input latency, and making input smoother.
 Everything runs natively through Windows built-in tools. It is **safe**, **non-destructive**, and **fully reversible**.
 
+![preview](https://imgur.com/WNTaUvM.png)
+
 > [!NOTE]
 > Ghost devices are phantom registry entries from hardware that is no longer connected. They silently consume IRQ resources and can cause driver conflicts, input stutter, and slower USB initialization.
 
@@ -76,3 +78,4 @@ The tool attempts removal using the following methods in order, stopping at the 
 <p align="center">
   <sub>©insopti — <a href="https://guns.lol/inso.vs">guns.lol/inso.vs</a> | For personal use only.</sub>
 </p>
+
