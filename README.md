@@ -1,180 +1,108 @@
-# Mouse Optimization — PowerShell GUI
-> PowerShell script with a graphical interface to optimize mouse input on Windows.  
-> Designed for competitive gaming — removes all latency and software interference.
-
-A set of targeted registry tweaks to achieve **raw, linear and immediate** mouse movement. The interface lets you select, apply or revert each category of tweaks in one click, with automatic backup before any modification.
+# Device Cleanup
+Scans and removes **ghost devices** left behind by previously connected hardware — reducing IRQ overhead, lowering input latency, and making input smoother.
+Everything runs natively through Windows built-in tools. It is **safe**, **non-destructive**, and **fully reversible**.
 
 > [!NOTE]
-> Not sure what it does? Check the **[video preview](https://youtu.be/p5Yo4Uq4rYk)** to see it in action. The whole process takes under 10 seconds.
+> Ghost devices are phantom registry entries from hardware that is no longer connected. They silently consume IRQ resources and can cause driver conflicts, input stutter, and slower USB initialization.
 
-![Main interface](https://imgur.com/XTgQb9A.png)
-
----
+![preview](https://imgur.com/WNTaUvM.png)
 
 <details>
 <summary><b>📸 Screenshots</b></summary>
-<br>
-
-**Tweak selection popup — individual tweak selection per category**
-![Tweak popup](https://imgur.com/2N5SAvL.png)
 
 ---
 
-**Live status — current state of each tracked registry key**
-![Status view](https://imgur.com/gDXhdeG.png)
+**Scan results — ghost devices detected and listed, protected devices preserved**
+> All detected devices are displayed with their status. Ghost devices (`GHOST`) are pre-checked and ready for removal. Devices with CPU affinity / IRQ pinning (`AFFINITY CONFIGURED`) are listed separately and unchecked by default.
+
+![Scan results](assets/screenshot_01.png)
 
 ---
 
-**Console output — result after applying a category**
-![Apply output](https://imgur.com/p6iMaFw.png)
+**Confirm removal — one-click removal with confirmation dialog**
+> Before any deletion, a confirmation popup displays the exact number of devices to be removed. The action cannot be undone through this tool — though devices will re-appear if the hardware is reconnected.
+
+![Confirm removal](assets/screenshot_02.png)
 
 ---
 
-**Revert — registry backup restoration**
-![Revert view](https://imgur.com/wfyMDDy.png)
+**After removal — clean state, only protected devices remain**
+> After removal, the tool automatically re-scans. Ghost count drops to `0`, removed count updates to reflect the session total. Only `AFFINITY CONFIGURED` devices remain, fully intact.
+
+![After removal](assets/screenshot_03.png)
 
 </details>
 
 ---
 
 ## Support
-**If you need any help or have questions**, feel free to join the **[Discord support server](https://discord.gg/insovs)** — I'll be happy to assist you.
-
----
+If you need any help or have questions, feel free to join the **[Discord support server](https://discord.com/invite/fayeECjdtb)** — I'll be happy to assist you.
 
 ## Installation & Launch
-Head to the **[Releases](https://github.com/insovs/insopti-MouseOptimization/releases)** section and download `MouseOptimization.ps1`, then **right-click** it → **"Run with PowerShell"**.  
-The script will automatically request administrator privileges and open a GUI — no installation required, fully standalone.
+Head to the **[Releases](https://github.com/insovs/insopti-DeviceCleanup/releases)** section and download `DeviceCleanup.ps1`, then **right-click** it → **"Run with PowerShell"**.  
+The script will automatically request administrator privileges.
 
----
-
-## Usage
-
-> [!NOTE]
-> If you are not allowed to run **PowerShell scripts**, enable it first:
+> [!CAUTION]
+> If you are not allowed to run PowerShell scripts, enable it first:
 > ```
 > Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 > ```
 > Or refer to [EnablePowerShellScript](https://github.com/insovs/EnablePowerShellScript).
 
-1. Select a category from the left sidebar.
-2. Check / uncheck the individual tweaks to apply in the popup.
-3. Adjust numeric values if available (`CursorUpdateInterval`, `MouseDataQueueSize`).
-4. Click **Apply** — a backup is created automatically before any write operation.
-5. Restart the system to validate all changes.
+## Usage
+1. Click **Scan System** — the tool scans all devices registered in Windows, including disconnected ones.
+2. Review the list — ghost devices are listed as **GHOST**, protected devices as **AFFINITY CONFIGURED**.
+3. Select the devices to remove (all ghosts are pre-checked by default).
+4. Click **Remove Selected** and confirm.
+5. The tool automatically re-scans after removal to confirm they are gone.
 
-To undo: **Revert Optimization** → select a backup from the list → **Restore** → restart.
+## What the tool does
+| Feature | Description |
+|---|---|
+| **Ghost device scan** | Detects all devices with status `Unknown` (Error Code 45) — hardware no longer connected |
+| **Affinity protection** | Automatically preserves any device with a CPU affinity / IRQ pinning configuration |
+| **Safe removal** | Removes ghost entries using up to 5 fallback methods — `Remove-PnpDevice`, `pnputil`, SetupAPI, `reg.exe`, `devcon` |
+| **Auto rescan** | Re-scans automatically after removal to reflect the updated device state |
+| **Non-destructive** | Only targets disconnected phantom entries — never touches active or protected devices |
 
----
+## Device categories
+| Label | Meaning |
+|---|---|
+| **`GHOST`** | Phantom device — previously connected, no longer present. Safe to remove. |
+| **`AFFINITY CONFIGURED`** | Device has IRQ / CPU affinity pinning configured. Protected by default, removable manually. |
 
-## Features
+> [!IMPORTANT]
+> Devices marked **AFFINITY CONFIGURED** are unchecked by default. Removing them will delete your IRQ affinity configuration. Only do so intentionally.
 
-- Full mouse acceleration removal (software via `MouseSpeed` + hardware via `MouseThreshold1/2`).
-- Perfect 1:1 linear movement — X/Y curves (`SmoothMouseXCurve` / `SmoothMouseYCurve`) forced to zero.
-- Driver delay reduction — `mouclass.sys` set to kernel realtime priority (31) and transmit timeout forced to 0.
-- Input buffer optimization — `MouseDataQueueSize` set to 16 for faster event transfer.
-- USB optimization — selective suspend disabled to prevent micro-cutouts and peripheral latency.
-- Instant hover — `MouseHoverTime` at 0ms, double-click tightened to 200ms.
-- Windows cursor magnetism disabled (`CursorMagnetism`) — removes automatic attraction towards UI buttons.
+## Benefits
+Gains scale with the number of devices removed. Results are most noticeable on systems with a large number of previously connected peripherals.
 
-- Automatic `.reg` backup before every modification — full restore possible at any time.
-- One-click revert — select a backup and silently restore via `regedit /s`.
-- Integrated console interface — real-time log of every applied tweak with color-coded status.
+| Improvement | Details |
+|---|---|
+| **Lower input latency** | Fewer phantom IRQ entries competing for resources |
+| **No IRQ conflicts** | Cleaner interrupt routing across active devices |
+| **Faster USB initialization** | Windows no longer enumerates stale device entries |
+| **Faster boot** | Reduced device enumeration on startup |
+| **Cleaner registry** | Removes dead entries under `HKLM\SYSTEM\CurrentControlSet\Enum` |
 
----
+## Additional info
+> [!IMPORTANT]
+> This tool requires **administrator privileges** — it reads device registry entries and calls Windows device management APIs.
 
-## Notes
-- A `.reg` backup is automatically created in `MouseOptimizer_Backups/` before each application.
-- Reboot recommended after applying — some kernel keys are only loaded at boot.
-- All tweaks are reversible at any time via the Revert function.
+> [!NOTE]
+> No benchmarks are provided, as results vary depending on hardware history, number of devices ever connected, and overall system configuration. On systems where many peripherals have been swapped over time, the improvement can be significant. Feel free to run your own tests and share your results — feedback is always welcome.
+> The tool does not modify any system files or active device drivers. All changes are limited to phantom registry entries for disconnected hardware.
 
----
+## Removal method chain
+The tool attempts removal using the following methods in order, stopping at the first success:
 
-## Registry Key Reference
-
-### 1. Main Mouse Registry Tweaks
-> `HKCU\Control Panel\Mouse` · `HKLM\SYSTEM\...` · `HKCU\Control Panel\Desktop`
-
-| Key | Value | Default | Effect |
-|:---|:---:|:---:|:---|
-| `MouseSpeed` | `0` dec | `1` | Disables Windows pointer acceleration (Enhanced Pointer Precision) |
-| `MouseThreshold1` | `0` dec | `6` | Removes first acceleration threshold (2x speed multiplier) |
-| `MouseThreshold2` | `0` dec | `10` | Removes second acceleration threshold (4x speed multiplier) |
-| `MouseSensitivity` | `10` dec | `10` | Neutral midpoint — no amplification of raw input |
-| `SmoothMouseXCurve` | `0x00000000…` hex | curve | Flat horizontal response — zero speed-dependent amplification on X axis |
-| `SmoothMouseYCurve` | `0x00000000…` hex | curve | Flat vertical response — perfect 1:1 physical distance mapping on Y axis |
-| `MouseHoverTime` | `0` dec | `400` | Tooltip fires instantly at 0ms instead of 400ms |
-| `DoubleClickSpeed` | `200` dec | `500` | Tighter double-click detection window (200ms) |
-| `MouseTrails` | `0` dec | `0` | Cursor ghost trails disabled — removes rendering overhead |
-| `MouseDelay` | `0` dec | `0` | No delay before first click-repeat event fires |
-| `MouseAccel` | `0` dec | `0` | Legacy hardware acceleration flag explicitly disabled |
-| `SwapMouseButtons` | `0` dec | `0` | Standard button layout enforced |
-| `SnapToDefaultButton` | `0` dec | `0` | Disables auto-snap cursor to default dialog button |
-| `ActiveWindowTracking` | `0` dec | `0` | Focus does not follow cursor without a click |
-| `Beep` | `"No"` str | `"Yes"` | Mouse beep sounds disabled |
-| `ExtendedSounds` | `"No"` str | `"Yes"` | Extended mouse audio feedback disabled |
-| `DisableSelectiveSuspend` | `1` dec | `0` | Prevents USB port power cuts that cause micro-stutters |
-| `PollStatusIterations` | `1` dec | `12` | Reduces PS/2 polling overhead — lower input latency on legacy ports |
-| `AttractionRectInsetInDIPS` | `0` dec | varies | Disables cursor magnetism attraction zone around UI buttons |
-| `DistanceThresholdInDIPS` | `0` dec | varies | Cursor is never pulled toward any UI element |
-| `MagnetismDelayInMilliseconds` | `1` dec | varies | Minimizes the window during which magnetism can engage |
-| `MagnetismUpdateIntervalInMilliseconds` | `1` dec | varies | Near-zero magnetism recalculation interval |
-| `VelocityInDIPSPerSecond` | `0` dec | varies | Zero attraction velocity — no cursor pull force applied |
+1. `Remove-PnpDevice` — native PowerShell cmdlet
+2. `pnputil.exe /remove-device` — Windows built-in PnP utility
+3. **SetupAPI** `SetupDiRemoveDevice` — direct Win32 API call, bypasses PnP manager lock
+4. `reg.exe delete` — brute-force registry key removal
+5. `devcon.exe remove` — if present on system or in script directory
 
 ---
-
-### 2. CursorUpdateInterval
-> `HKLM\SYSTEM\CurrentControlSet\Services\mouhid\Parameters`
-
-| Key | Value | Default | Effect |
-|:---|:---:|:---:|:---|
-| `CursorUpdateInterval` | `0` dec *(0–5)* | not set | HID cursor update rate. `0` = every kernel tick (maximum). Increase progressively if cursor behaves erratically |
-
-> [!CAUTION]
-> Start at `0`. If you experience erratic cursor movement, increase to `1`, `2`… until stable.
-
----
-
-### 3. HID Pointer Mode Tweaks
-> `HKLM\SYSTEM\CurrentControlSet\Services\mouhid\Parameters`
-
-| Key | Value | Default | Effect |
-|:---|:---:|:---:|:---|
-| `TreatAbsolutePointerAsAbsolute` | `1` dec | `0` | Forces absolute HID devices to map directly to screen coordinates — prevents misinterpretation as relative movement |
-| `TreatAbsoluteAsRelative` | `0` dec | `0` | Explicitly blocks absolute-to-relative conversion — prevents cursor jumps and erratic behavior |
-
----
-
-### 4. Mouse Class Transmit Timeout
-> `HKLM\SYSTEM\CurrentControlSet\Services\mouclass\Parameters`
-
-| Key | Value | Default | Effect |
-|:---|:---:|:---:|:---|
-| `MouseTransmitTimeout` | `0` dec | not set | Removes the internal buffer flush delay in `mouclass.sys` — every input event forwarded to the OS immediately |
-
----
-
-### 5. Mouse Class Thread Priority
-> `HKLM\SYSTEM\CurrentControlSet\Services\mouclass\Parameters`
-
-| Key | Value | Default | Effect |
-|:---|:---:|:---:|:---|
-| `ThreadPriority` | `31` / `0x1F` hex | not set | Sets `mouclass.sys` to highest kernel realtime priority — mouse events processed before all other threads even under heavy CPU load |
-
----
-
-### 6. Mouse Data Queue Size
-> `HKLM\SYSTEM\CurrentControlSet\Services\mouclass\Parameters`
-
-| Key | Value | Default | Effect |
-|:---|:---:|:---:|:---|
-| `MouseDataQueueSize` | `16` dec | `100` | Reduces the `mouclass.sys` event buffer from 100 to 16 — forces more frequent flushes, reducing queued input latency |
-
-> [!CAUTION]
-> Do not go below `16`. On older or unstable systems, test with `18–24`.
-
----
-
 <p align="center">
   <sub>©insopti — <a href="https://guns.lol/inso.vs">guns.lol/inso.vs</a> | For personal use only.</sub>
 </p>
