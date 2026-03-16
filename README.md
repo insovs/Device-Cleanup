@@ -7,6 +7,10 @@ Everything runs natively through Windows built-in tools. It is **safe**, **non-d
 
 ![preview](https://imgur.com/WNTaUvM.png)
 
+> [!NOTE]
+> Not sure what it does? Check the **[video preview](https://youtu.be/q63XYpYXOiQ)** to see it in action. the whole process takes under 10 seconds.
+
+
 <details>
 <summary><b>📸 Screenshots</b></summary>
 
