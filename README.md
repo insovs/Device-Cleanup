@@ -38,6 +38,15 @@ Everything runs natively through Windows built-in tools. It is **safe**, and **n
 
 ---
 
+## Why it matters
+Every time you plug in a peripheral — mouse, keyboard, USB hub, headset — Windows registers it. When you unplug it, the entry stays. Over time, these stale entries pile up silently in the registry, consuming IRQ resources and creating noise in the device enumeration process.
+
+Device Cleanup scans every registered device on your system, identifies the ones no longer physically present, and removes them in a single operation. The result is a cleaner interrupt table, faster USB initialization, and smoother input — with zero guesswork.
+
+All changes are limited to phantom entries. Active devices and any device with CPU affinity or IRQ pinning configured are never touched. If a removed device is reconnected, Windows will simply re-detect it as new — no data is permanently lost.
+
+---
+
 ## Support
 If you need any help or have questions, feel free to join the **[Discord support server](https://discord.com/invite/fayeECjdtb)** — I'll be happy to assist you.
 
