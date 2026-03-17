@@ -3,7 +3,7 @@ Scans and removes **ghost devices** left behind by previously connected hardware
 Everything runs natively through Windows built-in tools. It is **safe**, and **non-destructive**.
 
 - Ghost devices are phantom registry entries from hardware that is no longer connected.
-- They silently consume IRQ resources and can cause driver conflicts, input stutter, and slower USB initialization.
+- They silently consume IRQ resources and can cause input stutter, slower USB initialization, and driver conflicts.
 
 > [!NOTE]
 > Not sure what it does? Check the **[video preview](https://youtu.be/q63XYpYXOiQ)** to see it in action. the whole process takes under 10 seconds.
