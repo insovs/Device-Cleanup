@@ -86,10 +86,6 @@ Gains scale with the number of devices removed. Results are most noticeable on s
 | **Faster boot** | Reduced device enumeration on startup. |
 | **Cleaner registry** | Removes dead entries under `HKLM\SYSTEM\CurrentControlSet\Enum`. |
 
-## Additional info
-> [!IMPORTANT]
-> This tool requires **administrator privileges** — it reads device registry entries and calls Windows device management APIs.
-
 ## Removal method chain
 The tool attempts removal using the following methods in order, stopping at the first success:
 
