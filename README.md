@@ -105,6 +105,13 @@ The tool attempts removal using the following methods in order, stopping at the 
 5. `devcon.exe remove` — if present on system or in script directory
 
 ---
+
+## About this project
+This is an improved and redesigned version of the original [Device Cleanup Tool](https://www.uwe-sieber.de/misc_tools_e.html) by Uwe Sieber.  
+Built from scratch with a modern GUI, it adds automatic protection for devices with CPU affinity / IRQ pinning configured — keeping them clearly identified and unchecked by default, so nothing gets removed by accident.  
+The interface also provides a clearer real-time view of what is happening at each step, making the whole process more intuitive for everyone.
+
+---
 <p align="center">
   <sub>©insopti — <a href="https://guns.lol/inso.vs">guns.lol/inso.vs</a> | For personal use only.</sub>
 </p>
