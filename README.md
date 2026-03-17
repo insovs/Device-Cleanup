@@ -43,7 +43,7 @@ Every time you plug in a peripheral — mouse, keyboard, USB hub, headset — Wi
 
 Device Cleanup scans every registered device on your system, identifies the ones no longer physically present, and removes them in a single operation. The result is a cleaner interrupt table, faster USB initialization, and smoother input — with zero guesswork.
 
-All changes are limited to phantom entries. Active devices and any device with CPU affinity or IRQ pinning configured are never touched. If a removed device is reconnected, Windows will simply re-detect it as new — no data is permanently lost.
+All changes are limited to phantom entries. Active devices and any device with CPU affinity or IRQ pinning configured are never touched. If a removed device is reconnected, Windows will simply re-detect it as new — no data is permanently lost and fully safe !
 
 ---
 
