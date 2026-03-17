@@ -1,6 +1,6 @@
 # Device Cleanup
 Scans and removes **ghost devices** left behind by previously connected hardware — reducing IRQ overhead, lowering input latency, and making input smoother.
-Everything runs natively through Windows built-in tools. It is **safe**, **non-destructive**, and **fully reversible**.
+Everything runs natively through Windows built-in tools. It is **safe**, and **non-destructive**.
 
 - Ghost devices are phantom registry entries from hardware that is no longer connected. They silently consume IRQ resources and can cause driver conflicts, input stutter, and slower USB initialization.
 
